@@ -13,7 +13,7 @@ def extract_text_from_pdf(path):
     with open(path, "rb") as pdf:
         reader = PdfReader(pdf)
         results = []
-        for i in range(0,len(reader.pages)):
+        for i in range(len(reader.pages)):
             current = reader.pages[i]
             text = current.extract_text()
             results.append(text)
