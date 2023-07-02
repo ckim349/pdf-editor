@@ -1,6 +1,8 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QToolBar
+import sys
+from PySide6.QtWidgets import QApplication, QMainWindow, QToolBar, QWidget
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction, QIcon
+from widget import Widget
 
 class MainWindow(QMainWindow):
     def __init__(self, app):
@@ -12,8 +14,11 @@ class MainWindow(QMainWindow):
         file = menubar.addMenu("&File")
         open_action = file.addAction("&Open")
         file.addSeparator()
-        save_action = file.addAction("&Save as")
+
+        save_as_action = file.addAction("&Save as")
+        save_as_action.triggered.connect(self.save_as)
         file.addSeparator()
+
         quit_action = file.addAction("&Quit")
         quit_action.triggered.connect(self.quit)
 
@@ -38,6 +43,7 @@ class MainWindow(QMainWindow):
 
         help = menubar.addMenu("&Help")
 
+
         toolbar = QToolBar("Tool Bar for Tools")
         toolbar.setIconSize(QSize(20, 20))
         self.addToolBar(toolbar)
@@ -47,6 +53,10 @@ class MainWindow(QMainWindow):
         toolbar.addAction("&Find")
 
 
-
     def quit(self):
         self.app.quit()
+
+    def save_as(self):
+        save_as_widget = Widget()
+        save_as_widget.show()
+        return save_as_widget
