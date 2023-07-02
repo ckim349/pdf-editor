@@ -70,7 +70,7 @@ def delete_page(path, page_number):
 
 def merge_two_pdfs(pdf_1_path, pdf_2_path):
     merger = PdfMerger()
-    with open(f"{os.path.split(path)[0]}/merged_pdf.pdf", "wb") as pdf:
+    with open(f"{os.path.split(pdf_1_path)[0]}/merged_pdf.pdf", "wb") as pdf:
         merger.append(pdf_1_path)
         merger.append(pdf_2_path)
         merger.write(pdf)
