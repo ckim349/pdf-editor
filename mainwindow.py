@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QToolBar, QWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction, QIcon
 from widget import Widget
@@ -52,11 +52,13 @@ class MainWindow(QMainWindow):
         toolbar.addAction("&Print")
         toolbar.addAction("&Find")
 
+        self.save_as_widget = None
 
     def quit(self):
         self.app.quit()
 
+
     def save_as(self):
-        save_as_widget = Widget()
-        save_as_widget.show()
-        return save_as_widget
+        if self.save_as_widget is None:  # Only create the widget if it doesn't exist
+            self.save_as_widget = Widget()
+        self.save_as_widget.show()

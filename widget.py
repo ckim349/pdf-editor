@@ -21,11 +21,17 @@ class Widget(QWidget):
         save_as_layout.addWidget(save_as_label)
         save_as_layout.addWidget(save_as_line_edit)
 
+        save_cancel_layout = QHBoxLayout()
+        save_cancel_layout.addWidget(QPushButton("Save"))
+        save_cancel_layout.addWidget(QPushButton("Cancel"))
+
+
         main_layout = QVBoxLayout()
         main_layout.addLayout(filename_layout)
         main_layout.addLayout(save_as_layout)
+        main_layout.addLayout(save_cancel_layout)
 
-
+        self.setLayout(main_layout)
 
 
 
