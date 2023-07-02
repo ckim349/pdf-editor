@@ -27,18 +27,24 @@ def split_pdf(path):
             output(f"{os.path.splitext(path)[0]}_page_{i + 1}.pdf", writer)
 
 
-# def add_page(path, page_number):
+def add_page(path, page_number):
+    with open(path, "rb") as pdf:
+        reader = PdfReader(pdf)
+        writer = PdfWriter()
+        for i in range(len(reader.pages)):
+            if i + 1 == page_number:
+                writer.add_blank_page(612, 792)
+            writer.add_page(reader.pages[i])
+        output(f"{os.path.splitext(path)[0]}_page_{page_number}_added.pdf", writer)
+
+add_page(path2, 5)
+
+# def get_size(path):
 #     with open(path, "rb") as pdf:
 #         reader = PdfReader(pdf)
-#         writer = PdfWriter(pdf)
-#         for i in range(len(reader.pages)):
-#             if i + 1 == page_number:
-#                 writer.add_blank_page(595.2756, 841)
-#             writer.add_page(reader.pages[i])
-#         output(f"{os.path.splitext(path)[0]}_page_{page_number}_added.pdf", writer)
+#         return (reader.pages[0].mediabox.height, reader.pages[0].mediabox.width)
 #
-# add_page(path1, 2)
-
+# print(get_size(path1))
 
 def rotate(path, page_number):
     with open(path, "rb") as pdf:
