@@ -1,8 +1,8 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction, QIcon
-from widget import Widget
+from save_widget import SaveWidget
 
 class MainWindow(QMainWindow):
     def __init__(self, app):
@@ -54,11 +54,26 @@ class MainWindow(QMainWindow):
 
         self.save_as_widget = None
 
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+
+        tab_widget = QTabWidget(central_widget)
+        home_tab = QWidget()
+        pdf_tab = QWidget()
+
+        tab_widget.addTab(home_tab, "Home")
+        tab_widget.addTab(pdf_tab, "Pdf Editor")
+
+        main_layout = QVBoxLayout(central_widget)
+        main_layout.addWidget(tab_widget)
+
+        self.setLayout(main_layout)
+
     def quit(self):
         self.app.quit()
 
 
     def save_as(self):
         if self.save_as_widget is None:  # Only create the widget if it doesn't exist
-            self.save_as_widget = Widget()
+            self.save_as_widget = SaveWidget()
         self.save_as_widget.show()
