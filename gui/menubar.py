@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QMenuBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog
+from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QTextEdit, QMenuBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog, QMessageBox
+from PySide6.QtCore import QUrl
 from PySide6 import QtCore
 from save_widget import SaveWidget
 
@@ -12,7 +13,7 @@ class MenuBar(QMenuBar):
         # file_dialog = QFileDialog()
         # file_dialog.setNameFilter("PDF Files (*.pdf)")
         # file_dialog.setWindowTitle('Open folder...')
-        # open_action.triggered.connect(self.open_file())
+        # open_action.triggered.connect(self.open_file)
 
         file.addSeparator()
 
@@ -31,13 +32,9 @@ class MenuBar(QMenuBar):
         copy_action = edit.addAction("&Copy")
         paste_action = edit.addAction("&Paste")
 
-        view = self.addMenu("&View")
-
-        sign = self.addMenu("&Sign")
-
-        window = self.addMenu("&Window")
-
         help = self.addMenu("&Help")
+        about_action = help.addAction("&About")
+        about_action.triggered.connect(self.about_triggered)
 
         self.save_as_widget = None
 
@@ -45,3 +42,11 @@ class MenuBar(QMenuBar):
         if self.save_as_widget is None:
             self.save_as_widget = SaveWidget()
         self.save_as_widget.show()
+
+    def about_triggered(self):
+        ret = QMessageBox.information(
+            self,
+            "About Chulshin's Goodey Pdf Editor",
+            "Chulshin's Goodey Pdf Editor is a free to use pdf editor. Check out my github: https://github.com/ckim349",
+            QMessageBox.Ok | QMessageBox.Cancel
+        )

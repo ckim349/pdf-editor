@@ -2,6 +2,7 @@ import sys
 from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton
 from PySide6 import QtCore
 from PySide6.QtGui import QAction, QIcon
+from PySide6.QtWebEngineWidgets import QWebEngineView
 from toolbar import ToolBar
 from menubar import MenuBar
 
