@@ -5,13 +5,14 @@ from PySide6.QtPdf import QPdfDocument
 from save_widget import SaveWidget
 
 class MenuBar(QMenuBar):
-    def __init__(self, mainwindow):
+    def __init__(self, mainwindow, pdf_tab):
         super().__init__()
         self.mainwindow = mainwindow
+        self.pdf_tab = pdf_tab
 
         file = self.addMenu("&File")
         open_action = file.addAction("&Open")
-        open_action.triggered.connect(self.mainwindow.open_triggered)
+        open_action.triggered.connect(self.pdf_tab.open_triggered)
 
         file.addSeparator()
 
