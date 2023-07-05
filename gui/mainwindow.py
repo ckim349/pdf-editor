@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.app = app
         self.setWindowTitle("Chulshin's Goodey Pdf Editor")
-        pdf_tab = PdfTab()
+        pdf_tab = PdfTab(self)
 
         menubar = MenuBar(self, pdf_tab)
         self.setMenuBar(menubar)
@@ -24,16 +24,19 @@ class MainWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        tab_widget = QTabWidget(central_widget)
+        self.tab_widget = QTabWidget(central_widget)
         home_tab = QWidget()
 
-        tab_widget.addTab(home_tab, "Home")
-        tab_widget.addTab(pdf_tab, "Pdf Editor")
+        self.tab_widget.addTab(home_tab, "Home")
+        self.tab_widget.addTab(pdf_tab, "Pdf Editor")
 
         main_layout = QVBoxLayout(central_widget)
-        main_layout.addWidget(tab_widget)
+        main_layout.addWidget(self.tab_widget)
 
         self.setLayout(main_layout)
 
     def quit(self):
         self.app.quit()
+
+    def setTab(self, index):
+        self.tab_widget.setCurrentIndex(index)

@@ -6,8 +6,9 @@ from PySide6.QtCore import QUrl, Slot, QStandardPaths
 from toolbar import ToolBar
 
 class PdfTab(QMainWindow):
-    def __init__(self):
+    def __init__(self, mainwindow):
         super().__init__()
+        self.mainwindow = mainwindow
         self.pdf_document = QPdfDocument(self)
         self.pdf_file_dialog = None
 
@@ -27,6 +28,7 @@ class PdfTab(QMainWindow):
             self.pdf_document.load(doc_location.toLocalFile())
             document_title = self.pdf_document.metaData(QPdfDocument.MetaDataField.Title)
             self.setWindowTitle(document_title if document_title else "PDF Viewer")
+            self.mainwindow.setTab(1)
         else:
             message = f"{doc_location} is not a valid local file"
             print(message, file=sys.stderr)
