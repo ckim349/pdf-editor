@@ -1,6 +1,7 @@
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QTextEdit, QMenuBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog, QMessageBox
-from PySide6.QtCore import QUrl
-from PySide6 import QtCore
+import sys
+from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QTextEdit, QMenuBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog, QMessageBox, QDialog
+from PySide6.QtCore import QUrl, Slot, QStandardPaths
+from PySide6.QtPdf import QPdfDocument
 from save_widget import SaveWidget
 
 class MenuBar(QMenuBar):
@@ -10,10 +11,7 @@ class MenuBar(QMenuBar):
 
         file = self.addMenu("&File")
         open_action = file.addAction("&Open")
-        # file_dialog = QFileDialog()
-        # file_dialog.setNameFilter("PDF Files (*.pdf)")
-        # file_dialog.setWindowTitle('Open folder...')
-        # open_action.triggered.connect(self.open_file)
+        open_action.triggered.connect(self.mainwindow.open_triggered)
 
         file.addSeparator()
 
