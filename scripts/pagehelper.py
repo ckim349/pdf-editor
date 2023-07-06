@@ -9,6 +9,14 @@ def output(filename, writer):
     with open(filename, "wb") as output:
         writer.write(output)
 
+def save(directory, filename):
+    with open(directory, "rb") as pdf:
+        reader = PdfReader(pdf)
+        writer = PdfWriter()
+        for i in range(len(reader.pages)):
+            writer.add_page(reader.pages[i])
+        output(filename, writer)
+
 
 def get_num_pages(path):
     with open(path, "rb") as pdf:
@@ -21,9 +29,8 @@ def split_pdf(path):
     with open(path, "rb") as pdf:
         reader = PdfReader(pdf)
         for i in range(len(reader.pages)):
-            current = reader.pages[i]
             writer = PdfWriter()
-            writer.add_page(current)
+            writer.add_page(reader.pages[i])
             output(f"{os.path.splitext(path)[0]}_page_{i + 1}.pdf", writer)
 
 
@@ -36,8 +43,6 @@ def add_page(path, page_number):
                 writer.add_blank_page(612, 792)
             writer.add_page(reader.pages[i])
         output(f"{os.path.splitext(path)[0]}_page_{page_number}_added.pdf", writer)
-
-add_page(path2, 5)
 
 # def get_size(path):
 #     with open(path, "rb") as pdf:

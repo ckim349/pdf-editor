@@ -1,6 +1,6 @@
 from PyPDF2 import PdfReader, PdfWriter
 
-path = "samplepdfs/1.pdf"
+path = "../samplepdfs/1.pdf"
 
 def get_pdf_metadata(path):
     with open(path, "rb") as pdf:

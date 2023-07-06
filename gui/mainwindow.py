@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QDialog, QFileDialog
+from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QDialog, QFileDialog, QTabBar
 from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 from PySide6.QtCore import QUrl, Slot, QStandardPaths
@@ -25,10 +25,10 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(central_widget)
 
         self.tab_widget = QTabWidget(central_widget)
+        self.tab_widget.tabBar().setExpanding(True)
         home_tab = QWidget()
 
         self.tab_widget.addTab(home_tab, "Home")
-        self.tab_widget.addTab(pdf_tab, "Pdf Editor")
 
         main_layout = QVBoxLayout(central_widget)
         main_layout.addWidget(self.tab_widget)
