@@ -2,7 +2,6 @@ import sys
 from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QTextEdit, QMenuBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog, QMessageBox, QDialog
 from PySide6.QtCore import QUrl, Slot, QStandardPaths
 from PySide6.QtPdf import QPdfDocument
-from save_widget import SaveWidget
 
 class MenuBar(QMenuBar):
     def __init__(self, mainwindow, pdf_tab):
@@ -17,7 +16,7 @@ class MenuBar(QMenuBar):
         file.addSeparator()
 
         save_as_action = file.addAction("&Save as")
-        save_as_action.triggered.connect(self.save_as)
+        save_as_action.triggered.connect(self.pdf_tab.save_triggered)
         file.addSeparator()
 
         quit_action = file.addAction("&Quit")
@@ -34,13 +33,6 @@ class MenuBar(QMenuBar):
         help = self.addMenu("&Help")
         about_action = help.addAction("&About")
         about_action.triggered.connect(self.about_triggered)
-
-        self.save_as_widget = None
-
-    def save_as(self):
-        if self.save_as_widget is None:
-            self.save_as_widget = SaveWidget()
-        self.save_as_widget.show()
 
     def about_triggered(self):
         ret = QMessageBox.information(
