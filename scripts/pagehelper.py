@@ -9,14 +9,13 @@ def output(filename, writer):
     with open(filename, "wb") as output:
         writer.write(output)
 
-def save(directory, filename):
+def save_as(directory, filename):
     with open(directory, "rb") as pdf:
         reader = PdfReader(pdf)
         writer = PdfWriter()
         for i in range(len(reader.pages)):
             writer.add_page(reader.pages[i])
         output(filename, writer)
-
 
 def get_num_pages(path):
     with open(path, "rb") as pdf:

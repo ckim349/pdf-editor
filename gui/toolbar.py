@@ -1,9 +1,12 @@
 from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QComboBox
 from PySide6.QtCore import QSize
+from scripts.pagehelper import add_page, delete_page, rotate, crop, rearrange
+
 
 class ToolBar(QToolBar):
-    def __init__(self):
+    def __init__(self, pdf_tab):
         super().__init__()
+        self.pdf_tab = pdf_tab
 
         self.setIconSize(QSize(20, 20))
         self.addAction("&Print")
@@ -24,7 +27,8 @@ class ToolBar(QToolBar):
         self.addSeparator()
 
         self.addAction("&Crop")
-        self.addAction("&Rotate page")
+        rotate_action = self.addAction("&Rotate page")
+        rotate_action.triggered.connect(self.rotate_triggered)
         self.addAction("&Add page")
         self.addAction("&Delete page")
         self.addAction("&Rearrange pages")
@@ -34,3 +38,6 @@ class ToolBar(QToolBar):
         more_tools_combo_box.addItem("Sign forms")
         more_tools_combo_box.addItem("Compress file")
         self.addWidget(more_tools_combo_box)
+
+    def rotate_triggered(self):
+        print(self.pdf_tab.page_navigator.currentPage())

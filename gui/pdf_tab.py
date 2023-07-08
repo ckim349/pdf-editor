@@ -1,13 +1,13 @@
 import sys
 from PySide6.QtPrintSupport import QPrinter
 from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QDialog, QFileDialog
-from PySide6.QtPdf import QPdfDocument
+from PySide6.QtPdf import QPdfDocument, QPdfPageNavigator
 from PySide6.QtPdfWidgets import QPdfView
 from PySide6.QtCore import QUrl, Slot, QStandardPaths
 from PySide6.QtGui import QPdfWriter, QPainter, QPageSize
 from PySide6 import QtCore
 from toolbar import ToolBar
-from scripts.pagehelper import save, output
+from scripts.pagehelper import save_as, output
 
 class PdfTab(QMainWindow):
     def __init__(self, mainwindow):
@@ -17,8 +17,10 @@ class PdfTab(QMainWindow):
         self.pdf_file_dialog = None
         self.pdf_file_dialog_save = None
         self.file_opened = False
+        self.current_pdf = None
+        self.page_navigator = QPdfPageNavigator()
 
-        toolbar = ToolBar()
+        toolbar = ToolBar(self)
         self.addToolBar(toolbar)
 
         pdf_view = QPdfView(self)
@@ -35,6 +37,7 @@ class PdfTab(QMainWindow):
             self.mainwindow.tab_widget.insertTab(-1, self, doc_location.toString().split('/')[-1])
             self.mainwindow.setTab(1)
             self.file_opened = True
+            self.current_pdf = doc_location.toString()
         else:
             message = f"{doc_location} is not a valid local file"
             print(message, file=sys.stderr)
@@ -52,25 +55,6 @@ class PdfTab(QMainWindow):
             if to_open.isValid():
                 self.open(to_open)
 
-    # @Slot()
-    # def save(self, file_name):
-        # printer = QPrinter(QPrinter.HighResolution)
-        # printer.setOutputFileName(file_name)
-        # printer.setOutputFormat(QPrinter.PdfFormat)
-        #
-        # painter = QPainter(printer)
-        # self.render(painter)
-        # painter.end()
-
-        # writer = QPdfWriter(file_name)
-        # writer.setPageSize(QPageSize(self.centralWidget().size()))
-        #
-        # painter = QPainter(writer)
-        # self.centralWidget().render(painter)
-        #
-        # painter.end()
-        # writer.end()
-
     @Slot()
     def save_triggered(self):
         if self.file_opened:
@@ -81,10 +65,8 @@ class PdfTab(QMainWindow):
                 self.pdf_file_dialog_save.setMimeTypeFilters(["application/pdf"])
             if self.pdf_file_dialog_save.exec() == QDialog.Accepted:
                 to_save = self.pdf_file_dialog_save.selectedUrls()[0]
-                print(to_save)
-                print(to_save.fileName())
-                # if to_save.isValid():
-                    # save(directory, to_save.fileName())
+                if to_save.isValid():
+                    save_as(self.current_pdf[8:], '/'.join(to_save.toDisplayString()[8:].split('/')[:-1]) + '/' + to_save.fileName())
         else:
             message = "You can't save a file that's not open!"
             print(message)
