@@ -60,8 +60,7 @@ def rotate(path, page_number):
             writer.add_page(reader.pages[i])
             if i + 1 == page_number:
                 writer.pages[i].rotate(90)
-        output(f"{os.path.splitext(path)[0]}_page_{page_number}_rotated.pdf", writer)
-
+        output(f"{os.path.splitext(path)[0]}.pdf", writer)
 
 def delete_page(path, page_number):
     with open(path, "rb") as pdf:

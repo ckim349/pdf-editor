@@ -43,6 +43,6 @@ class ToolBar(QToolBar):
 
     def rotate_triggered(self):
         if not self.editwindow:
-            self.editwindow = RotateEditWindow()
+            self.editwindow = RotateEditWindow(self.pdf_tab)
         self.editwindow.resize(650, 400)
         self.editwindow.show()

@@ -18,6 +18,7 @@ class PdfTab(QMainWindow):
         self.pdf_file_dialog_save = None
         self.file_opened = False
         self.current_pdf = None
+        self.reload_reference = None
 
         toolbar = ToolBar(self)
         self.addToolBar(toolbar)
@@ -33,6 +34,7 @@ class PdfTab(QMainWindow):
     @Slot(QUrl)
     def open(self, doc_location):
         if doc_location.isLocalFile():
+            self.reload_reference = doc_location
             self.pdf_document.load(doc_location.toLocalFile())
             self.mainwindow.tab_widget.insertTab(-1, self, doc_location.toString().split('/')[-1])
             self.mainwindow.setTab(1)
