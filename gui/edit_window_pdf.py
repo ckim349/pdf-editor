@@ -15,7 +15,8 @@ class EditWindowPdf(QMainWindow):
 
         pdf_view = QPdfView(self)
         pdf_view.setDocument(self.pdf_document)
-        pdf_view.setPageMode(QPdfView.PageMode.SinglePage)
+        pdf_view.setPageMode(QPdfView.PageMode.MultiPage)
+        pdf_view.setZoomFactor(0.75)
 
         self.setLayout(QVBoxLayout())
         self.setCentralWidget(pdf_view)

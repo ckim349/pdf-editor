@@ -61,7 +61,7 @@ class ToolBar(QToolBar):
         if self.active_edit != "crop":
             self.close_edit_window()
             self.edit_window = CropEditWindow(self.pdf_tab)
-            self.edit_window.resize(650, 400)
+            self.edit_window.resize(800, 550)
             self.edit_window.show()
             self.active_edit = "crop"
         else:
@@ -71,7 +71,7 @@ class ToolBar(QToolBar):
         if self.active_edit != "rotate":
             self.close_edit_window()
             self.edit_window = RotateEditWindow(self.pdf_tab)
-            self.edit_window.resize(650, 400)
+            self.edit_window.resize(800, 550)
             self.edit_window.show()
             self.active_edit = "rotate"
         else:
@@ -81,7 +81,7 @@ class ToolBar(QToolBar):
         if self.active_edit != "add_page":
             self.close_edit_window()
             self.edit_window = AddPageEditWindow(self.pdf_tab)
-            self.edit_window.resize(650, 400)
+            self.edit_window.resize(800, 550)
             self.edit_window.show()
             self.active_edit = "add_page"
         else:
@@ -91,7 +91,7 @@ class ToolBar(QToolBar):
         if self.active_edit != "delete_page":
             self.close_edit_window()
             self.edit_window = DeletePageEditWindow(self.pdf_tab)
-            self.edit_window.resize(650, 400)
+            self.edit_window.resize(800, 550)
             self.edit_window.show()
             self.active_edit = "delete_page"
         else:
@@ -101,7 +101,7 @@ class ToolBar(QToolBar):
         if self.active_edit != "rearrange":
             self.close_edit_window()
             self.edit_window = RearrangeEditWindow(self.pdf_tab)
-            self.edit_window.resize(650, 400)
+            self.edit_window.resize(800, 550)
             self.edit_window.show()
             self.active_edit = "rearrange"
         else:
