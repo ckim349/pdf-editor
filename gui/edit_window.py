@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QGridLayout, QComboBox, QLineEdit
 from PySide6.QtPdf import QPdfPageNavigator
-from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange, get_num_pages
+from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange, get_size
 from edit_window_pdf import EditWindowPdf
 
 class BaseEditWindow(QWidget):
@@ -48,7 +48,12 @@ class CropEditWindow(BaseEditWindow):
         self.setWindowTitle("Crop")
         self.pdf_tab = pdf_tab
 
-        self.editing_layout.addWidget(QLabel(f"Lower left x: bounds = 0 - "))
+        self.page_bounds = QLabel()
+        self.page_select.currentIndexChanged.connect(self.update_page_bounds)
+        self.update_page_bounds()
+        self.editing_layout.addWidget(self.page_bounds)
+
+        self.editing_layout.addWidget(QLabel("Lower left x: "))
         self.lower_left_x = QLineEdit()
         self.editing_layout.addWidget(self.lower_left_x)
         self.editing_layout.addWidget(QLabel("Lower left y: "))
@@ -66,11 +71,15 @@ class CropEditWindow(BaseEditWindow):
         crop_button.clicked.connect(self.crop_button_clicked)
 
     def crop_button_clicked(self):
-        crop(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()))
+        crop(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()), int(self.lower_left_x.text()), int(self.lower_left_y.text()), int(self.upper_right_x.text()), int(self.upper_right_y.text()))
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         # self.pdf_tab.history.undo_stack.append()
 
+    def update_page_bounds(self):
+        current_page = int(self.page_select.currentText())
+        (x,y) = get_size(self.pdf_tab.current_pdf[8:], current_page)
+        self.page_bounds.setText(f"Page {current_page} bounds: {'{:.2f}'.format(x), '{:.2f}'.format(y)}")
 
 class RotateEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):

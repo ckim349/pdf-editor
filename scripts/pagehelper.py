@@ -48,7 +48,7 @@ def add_page(path, page_number):
 def get_size(path, page):
     with open(path, "rb") as pdf:
         reader = PdfReader(pdf)
-        return (reader.pages[page - 1].mediabox.height, reader.pages[page - 1].mediabox.width)
+        return reader.pages[page - 1].mediabox.width, reader.pages[page - 1].mediabox.height
 
 def rotate(path, page_number):
     with open(path, "rb") as pdf:
