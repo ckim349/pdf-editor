@@ -20,9 +20,11 @@ class BaseEditWindow(QWidget):
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
 
         self.editing_layout = QVBoxLayout()
+        self.page_label = QLabel("Choose page:")
         self.page_select = QComboBox()
         self.update_page_select()
 
+        self.editing_layout.addWidget(self.page_label)
         self.editing_layout.addWidget(self.page_select)
 
         main_layout = QHBoxLayout()
@@ -114,19 +116,26 @@ class RearrangeEditWindow(BaseEditWindow):
         self.setWindowTitle("Rearrange Pages")
         self.pdf_tab = pdf_tab
 
+        self.new_page_label = QLabel("Choose page to swap with:")
+        self.new_page_select = QComboBox()
+        self.update_new_page_select()
+
+        self.editing_layout.addWidget(self.new_page_label)
+        self.editing_layout.addWidget(self.new_page_select)
+
         rearrange_button = QPushButton("Rearrange Pages dat")
         self.editing_layout.addWidget(rearrange_button)
         rearrange_button.clicked.connect(self.rearrange_button_clicked)
 
     def rearrange_button_clicked(self):
-        self.new_page_select = QComboBox()
-        for i in range(self.pdf_tab.pdf_document.pageCount()):
-            self.page_select.addItem(str(i + 1))
-
-        self.editing_layout.addWidget(self.new_page_select)
-
         rearrange(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()), int(self.new_page_select.currentText()))
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
+        self.update_new_page_select()
         self.pdf_tab.history.undo_stack.append(("rearrange", 1, 2))
+
+    def update_new_page_select(self):
+        self.new_page_select.clear()
+        for i in range(self.pdf_tab.pdf_document.pageCount()):
+            self.new_page_select.addItem(str(i + 1))
