@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QGridLayout, QComboBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QGridLayout, QComboBox, QLineEdit
 from PySide6.QtPdf import QPdfPageNavigator
 from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange, get_num_pages
 from edit_window_pdf import EditWindowPdf
@@ -47,6 +47,19 @@ class CropEditWindow(BaseEditWindow):
         super().__init__(pdf_tab)
         self.setWindowTitle("Crop")
         self.pdf_tab = pdf_tab
+
+        self.editing_layout.addWidget(QLabel(f"Lower left x: bounds = 0 - "))
+        self.lower_left_x = QLineEdit()
+        self.editing_layout.addWidget(self.lower_left_x)
+        self.editing_layout.addWidget(QLabel("Lower left y: "))
+        self.lower_left_y = QLineEdit()
+        self.editing_layout.addWidget(self.lower_left_y)
+        self.editing_layout.addWidget(QLabel("Upper right x: "))
+        self.upper_right_x = QLineEdit()
+        self.editing_layout.addWidget(self.upper_right_x)
+        self.editing_layout.addWidget(QLabel("Upper right y: "))
+        self.upper_right_y = QLineEdit()
+        self.editing_layout.addWidget(self.upper_right_y)
 
         crop_button = QPushButton("Crop dat")
         self.editing_layout.addWidget(crop_button)
