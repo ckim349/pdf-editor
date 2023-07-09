@@ -30,7 +30,6 @@ class PdfTab(QMainWindow):
         pdf_view.setDocument(self.pdf_document)
         pdf_view.setPageMode(QPdfView.PageMode.MultiPage)
 
-
         self.setLayout(QVBoxLayout())
         self.setCentralWidget(pdf_view)
 

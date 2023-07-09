@@ -1,25 +1,44 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget, QGridLayout
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QGridLayout
 from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange
-
+from edit_window_pdf import EditWindowPdf
 class BaseEditWindow(QWidget):
-    def __init__(self):
+    def __init__(self, pdf_tab):
         super().__init__()
-
-        grid_layout = QGridLayout()
+        self.pdf_tab = pdf_tab
+        self.edit_window_pdf = EditWindowPdf()
 
         back_page_button = QPushButton("<")
+        back_page_button.clicked.connect(self.back)
         page_number = QLabel("1/2")
         next_page_button = QPushButton(">")
+        back_page_button.clicked.connect(self.forward)
 
-        grid_layout.addWidget(back_page_button,3,3)
-        grid_layout.addWidget(page_number,3,4)
-        grid_layout.addWidget(next_page_button,3,5)
+        pdf_view_layout = QVBoxLayout()
+        pdf_buttons_layout = QHBoxLayout()
+        pdf_view_layout.addLayout(pdf_buttons_layout)
+        pdf_view_layout.addWidget(self.edit_window_pdf)
+        self.edit_window_pdf.open(self.pdf_tab.reload_reference)
 
-        self.setLayout(grid_layout)
+        editing_layout = QVBoxLayout()
+        main_layout = QHBoxLayout()
+        main_layout.addLayout(editing_layout)
+        main_layout.addLayout(pdf_view_layout)
+
+        pdf_buttons_layout.addWidget(back_page_button)
+        pdf_buttons_layout.addWidget(page_number)
+        pdf_buttons_layout.addWidget(next_page_button)
+
+        self.setLayout(main_layout)
+
+    def back(self):
+        self.edit_window_pdf.page_nav.back()
+
+    def forward(self):
+        self.edit_window_pdf.page_nav.forward()
 
 class CropEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
-        super().__init__()
+        super().__init__(pdf_tab)
         self.setWindowTitle("Crop")
         self.pdf_tab = pdf_tab
 
@@ -31,12 +50,13 @@ class CropEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         crop(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         # self.pdf_tab.history.undo_stack.append()
 
 
 class RotateEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
-        super().__init__()
+        super().__init__(pdf_tab)
         self.setWindowTitle("Rotate")
         self.pdf_tab = pdf_tab
 
@@ -48,11 +68,12 @@ class RotateEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         rotate(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.pdf_tab.history.undo_stack.append(("rotate", 1))
 
 class AddPageEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
-        super().__init__()
+        super().__init__(pdf_tab)
         self.setWindowTitle("Add Page")
         self.pdf_tab = pdf_tab
 
@@ -64,11 +85,12 @@ class AddPageEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         add_page(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.pdf_tab.history.undo_stack.append(("add", 1))
 
 class DeletePageEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
-        super().__init__()
+        super().__init__(pdf_tab)
         self.setWindowTitle("Delete Page")
         self.pdf_tab = pdf_tab
 
@@ -80,11 +102,12 @@ class DeletePageEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         delete_page(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.pdf_tab.history.undo_stack.append(("delete", 1))
 
 class RearrangeEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
-        super().__init__()
+        super().__init__(pdf_tab)
         self.setWindowTitle("Rearrange Pages")
         self.pdf_tab = pdf_tab
 
@@ -96,4 +119,5 @@ class RearrangeEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         rearrange(self.pdf_tab.current_pdf[8:], 1, 2)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.pdf_tab.history.undo_stack.append(("rearrange", 1, 2))
