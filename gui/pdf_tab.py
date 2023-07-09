@@ -26,12 +26,12 @@ class PdfTab(QMainWindow):
         toolbar = ToolBar(self)
         self.addToolBar(toolbar)
 
-        pdf_view = QPdfView(self)
-        pdf_view.setDocument(self.pdf_document)
-        pdf_view.setPageMode(QPdfView.PageMode.MultiPage)
+        self.pdf_view = QPdfView(self)
+        self.pdf_view.setDocument(self.pdf_document)
+        self.pdf_view.setPageMode(QPdfView.PageMode.MultiPage)
 
         self.setLayout(QVBoxLayout())
-        self.setCentralWidget(pdf_view)
+        self.setCentralWidget(self.pdf_view)
 
     @Slot(QUrl)
     def open(self, doc_location):

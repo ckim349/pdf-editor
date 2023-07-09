@@ -16,17 +16,10 @@ class ToolBar(QToolBar):
         self.addAction("&Find")
         self.addSeparator()
 
-        self.addAction("&Zoom out")
-        self.addAction("&Zoom in")
-        zoom_combo_box = QComboBox()
-        zoom_combo_box.addItem("50%")
-        zoom_combo_box.addItem("75%")
-        zoom_combo_box.addItem("100%")
-        zoom_combo_box.addItem("125%")
-        zoom_combo_box.addItem("150%")
-        zoom_combo_box.addItem("175%")
-        zoom_combo_box.addItem("200%")
-        self.addWidget(zoom_combo_box)
+        zoom_out_action = self.addAction("&Zoom out")
+        zoom_out_action.triggered.connect(self.zoom_out_triggered)
+        zoom_in_action = self.addAction("&Zoom in")
+        zoom_in_action.triggered.connect(self.zoom_in_triggered)
         self.addSeparator()
 
         crop_action = self.addAction("&Crop")
@@ -106,3 +99,10 @@ class ToolBar(QToolBar):
             self.active_edit = "rearrange"
         else:
             self.close_edit_window()
+
+    def zoom_out_triggered(self):
+        if self.pdf_tab.pdf_view.zoomFactor() > 0.25:
+            self.pdf_tab.pdf_view.setZoomFactor(self.pdf_tab.pdf_view.zoomFactor() - 0.25)
+
+    def zoom_in_triggered(self):
+        self.pdf_tab.pdf_view.setZoomFactor(self.pdf_tab.pdf_view.zoomFactor() + 0.25)
