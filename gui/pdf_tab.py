@@ -7,6 +7,7 @@ from PySide6.QtCore import QUrl, Slot, QStandardPaths
 from PySide6.QtGui import QPdfWriter, QPainter, QPageSize
 from PySide6 import QtCore
 from toolbar import ToolBar
+from history import History
 from scripts.pagehelper import save_as, output
 
 class PdfTab(QMainWindow):
@@ -19,6 +20,8 @@ class PdfTab(QMainWindow):
         self.file_opened = False
         self.current_pdf = None
         self.reload_reference = None
+
+        self.history = History()
 
         toolbar = ToolBar(self)
         self.addToolBar(toolbar)

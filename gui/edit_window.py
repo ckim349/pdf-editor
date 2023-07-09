@@ -31,6 +31,7 @@ class CropEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         crop(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        # self.pdf_tab.history.undo_stack.append()
 
 
 class RotateEditWindow(BaseEditWindow):
@@ -47,6 +48,7 @@ class RotateEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         rotate(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.pdf_tab.history.undo_stack.append(("rotate", 1))
 
 class AddPageEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
@@ -62,6 +64,7 @@ class AddPageEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         add_page(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.pdf_tab.history.undo_stack.append(("add", 1))
 
 class DeletePageEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
@@ -77,6 +80,7 @@ class DeletePageEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         delete_page(self.pdf_tab.current_pdf[8:], 1)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.pdf_tab.history.undo_stack.append(("delete", 1))
 
 class RearrangeEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
@@ -92,3 +96,4 @@ class RearrangeEditWindow(BaseEditWindow):
         # Temporarily set to page 1
         rearrange(self.pdf_tab.current_pdf[8:], 1, 2)
         self.pdf_tab.open(self.pdf_tab.reload_reference)
+        self.pdf_tab.history.undo_stack.append(("rearrange", 1, 2))
