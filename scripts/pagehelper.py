@@ -24,13 +24,13 @@ def get_num_pages(path):
     return pages
 
 
-def split_pdf(path):
-    with open(path, "rb") as pdf:
-        reader = PdfReader(pdf)
-        for i in range(len(reader.pages)):
-            writer = PdfWriter()
-            writer.add_page(reader.pages[i])
-            output(f"{os.path.splitext(path)[0]}_page_{i + 1}.pdf", writer)
+# def split_pdf(path):
+#     with open(path, "rb") as pdf:
+#         reader = PdfReader(pdf)
+#         for i in range(len(reader.pages)):
+#             writer = PdfWriter()
+#             writer.add_page(reader.pages[i])
+#             output(f"{os.path.splitext(path)[0]}.pdf", writer)
 
 
 def add_page(path, page_number):
@@ -70,7 +70,7 @@ def delete_page(path, page_number):
             if i + 1 == page_number:
                 continue
             writer.add_page(reader.pages[i])
-        output(f"{os.path.splitext(path)[0]}_page_{page_number}_deleted.pdf", writer)
+        output(f"{os.path.splitext(path)[0]}.pdf", writer)
 
 
 def merge_two_pdfs(pdf_1_path, pdf_2_path):
@@ -92,7 +92,7 @@ def crop(path, page_number, lower_left_x, lower_left_y, upper_right_x, upper_rig
                 page = writer.pages[i]
                 page.cropbox.lower_left = (lower_left_x, lower_left_y)
                 page.cropbox.upper_right = (upper_right_x, upper_right_y)
-        output(f"{os.path.splitext(path)[0]}_page_{page_number}_cropped.pdf", writer)
+        output(f"{os.path.splitext(path)[0]}.pdf", writer)
 
 
 def rearrange(path, page_number, new_page_number):
@@ -105,5 +105,5 @@ def rearrange(path, page_number, new_page_number):
             if i + 1 == page_number:
                 continue
             writer.add_page(reader.pages[i])
-        output(f"{os.path.splitext(path)[0]}_rearranged.pdf", writer)
+        output(f"{os.path.splitext(path)[0]}.pdf", writer)
 

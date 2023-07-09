@@ -4,9 +4,9 @@ from PySide6.QtCore import QUrl, Slot, QStandardPaths
 from PySide6.QtPdf import QPdfDocument
 
 class MenuBar(QMenuBar):
-    def __init__(self, mainwindow, pdf_tab):
+    def __init__(self, main_window, pdf_tab):
         super().__init__()
-        self.mainwindow = mainwindow
+        self.main_window = main_window
         self.pdf_tab = pdf_tab
 
         file = self.addMenu("&File")
@@ -20,7 +20,7 @@ class MenuBar(QMenuBar):
         file.addSeparator()
 
         quit_action = file.addAction("&Quit")
-        quit_action.triggered.connect(self.mainwindow.quit)
+        quit_action.triggered.connect(self.main_window.quit)
 
         edit = self.addMenu("&Edit")
         undo_action = edit.addAction("&Undo")

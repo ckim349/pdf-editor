@@ -10,9 +10,9 @@ from toolbar import ToolBar
 from scripts.pagehelper import save_as, output
 
 class PdfTab(QMainWindow):
-    def __init__(self, mainwindow):
+    def __init__(self, main_window):
         super().__init__()
-        self.mainwindow = mainwindow
+        self.main_window = main_window
         self.pdf_document = QPdfDocument(self)
         self.pdf_file_dialog = None
         self.pdf_file_dialog_save = None
@@ -36,8 +36,8 @@ class PdfTab(QMainWindow):
         if doc_location.isLocalFile():
             self.reload_reference = doc_location
             self.pdf_document.load(doc_location.toLocalFile())
-            self.mainwindow.tab_widget.insertTab(-1, self, doc_location.toString().split('/')[-1])
-            self.mainwindow.setTab(1)
+            self.main_window.tab_widget.insertTab(-1, self, doc_location.toString().split('/')[-1])
+            self.main_window.setTab(1)
             self.file_opened = True
             self.current_pdf = doc_location.toString()
         else:
