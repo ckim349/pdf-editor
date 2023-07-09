@@ -100,10 +100,9 @@ def rearrange(path, page_number, new_page_number):
         reader = PdfReader(pdf)
         writer = PdfWriter()
         for i in range(len(reader.pages)):
-            if i + 1 == new_page_number:
-                writer.add_page(reader.pages[page_number - 1])
             if i + 1 == page_number:
                 continue
             writer.add_page(reader.pages[i])
+            if i + 1 == new_page_number:
+                writer.add_page(reader.pages[page_number - 1])
         output(f"{os.path.splitext(path)[0]}.pdf", writer)
-
