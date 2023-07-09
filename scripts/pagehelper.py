@@ -1,8 +1,8 @@
 import os
 from PyPDF2 import PdfReader, PdfWriter, PdfMerger
 
-path1 = "samplepdfs/1.pdf"
-path2 = "samplepdfs/2.pdf"
+path1 = "../samplepdfs/1.pdf"
+path2 = "../samplepdfs/2.pdf"
 
 
 def output(filename, writer):
@@ -41,7 +41,9 @@ def add_page(path, page_number):
             if i + 1 == page_number:
                 writer.add_blank_page(612, 792)
             writer.add_page(reader.pages[i])
-        output(f"{os.path.splitext(path)[0]}_page_{page_number}_added.pdf", writer)
+        output(f"{os.path.splitext(path)[0]}.pdf", writer)
+# _page_{page_number}_added
+
 
 # def get_size(path):
 #     with open(path, "rb") as pdf:

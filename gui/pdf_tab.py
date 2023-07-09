@@ -18,7 +18,6 @@ class PdfTab(QMainWindow):
         self.pdf_file_dialog_save = None
         self.file_opened = False
         self.current_pdf = None
-        self.page_navigator = QPdfPageNavigator()
 
         toolbar = ToolBar(self)
         self.addToolBar(toolbar)
@@ -26,6 +25,7 @@ class PdfTab(QMainWindow):
         pdf_view = QPdfView(self)
         pdf_view.setDocument(self.pdf_document)
         pdf_view.setPageMode(QPdfView.PageMode.MultiPage)
+
 
         self.setLayout(QVBoxLayout())
         self.setCentralWidget(pdf_view)

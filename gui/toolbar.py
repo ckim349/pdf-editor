@@ -1,5 +1,6 @@
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QComboBox
+from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QComboBox, QDialog
 from PySide6.QtCore import QSize
+from editwindow import RotateEditWindow
 from scripts.pagehelper import add_page, delete_page, rotate, crop, rearrange
 
 
@@ -7,6 +8,7 @@ class ToolBar(QToolBar):
     def __init__(self, pdf_tab):
         super().__init__()
         self.pdf_tab = pdf_tab
+        self.editwindow = None
 
         self.setIconSize(QSize(20, 20))
         self.addAction("&Print")
@@ -40,4 +42,7 @@ class ToolBar(QToolBar):
         self.addWidget(more_tools_combo_box)
 
     def rotate_triggered(self):
-        print(self.pdf_tab.page_navigator.currentPage())
+        if not self.editwindow:
+            self.editwindow = RotateEditWindow()
+        self.editwindow.resize(650, 400)
+        self.editwindow.show()
