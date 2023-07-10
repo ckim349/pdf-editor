@@ -71,7 +71,7 @@ class CropEditWindow(BaseEditWindow):
         crop_button.clicked.connect(self.crop_button_clicked)
 
     def crop_button_clicked(self):
-        crop(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()), int(self.lower_left_x.text()), int(self.lower_left_y.text()), int(self.upper_right_x.text()), int(self.upper_right_y.text()))
+        crop(self.pdf_tab.current_pdf[8:], float(self.page_select.currentText()), float(self.lower_left_x.text()), float(self.lower_left_y.text()), float(self.upper_right_x.text()), float(self.upper_right_y.text()))
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         # self.pdf_tab.history.undo_stack.append()
@@ -80,6 +80,7 @@ class CropEditWindow(BaseEditWindow):
         current_page = int(self.page_select.currentText())
         (x,y) = get_size(self.pdf_tab.current_pdf[8:], current_page)
         self.page_bounds.setText(f"Page {current_page} bounds: {'{:.2f}'.format(x), '{:.2f}'.format(y)}")
+
 
 class RotateEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
@@ -98,6 +99,7 @@ class RotateEditWindow(BaseEditWindow):
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.pdf_tab.history.undo_stack.append(("rotate", 1))
 
+
 class AddPageEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
         super().__init__(pdf_tab)
@@ -115,6 +117,7 @@ class AddPageEditWindow(BaseEditWindow):
         self.update_page_select()
         self.pdf_tab.history.undo_stack.append(("add", 1))
 
+
 class DeletePageEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
         super().__init__(pdf_tab)
@@ -131,6 +134,7 @@ class DeletePageEditWindow(BaseEditWindow):
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
         self.pdf_tab.history.undo_stack.append(("delete", 1))
+
 
 class RearrangeEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
