@@ -73,7 +73,7 @@ def delete_page(path, page_number):
 
 def merge_two_pdfs(pdf_1_path, pdf_2_path):
     merger = PdfMerger()
-    with open(f"{os.path.split(pdf_1_path)[0]}/merged.pdf", "wb") as pdf:
+    with open(f"{os.path.split(pdf_1_path)[0]}-merged.pdf", "wb") as pdf:
         merger.append(pdf_1_path)
         merger.append(pdf_2_path)
         merger.write(pdf)
@@ -106,3 +106,15 @@ def rearrange(path, page_number, new_page_number):
             if i + 1 == new_page_number:
                 writer.add_page(reader.pages[page_number - 1])
         output(f"{os.path.splitext(path)[0]}.pdf", writer)
+
+def compress(path):
+    with open(path, "rb") as pdf:
+        reader = PdfReader(pdf)
+        writer = PdfWriter()
+
+        for page in reader.pages:
+            page.compress_content_streams()
+            writer.add_page(page)
+
+        with open(f"{os.path.split(path)[0]}-compressed.pdf", "wb") as fp:
+            writer.write(fp)

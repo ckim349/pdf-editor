@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, Q
     QVBoxLayout, QComboBox, QDialog, QFileDialog
 from PySide6.QtCore import QSize, QStandardPaths
 from edit_window import RotateEditWindow, CropEditWindow, AddPageEditWindow, DeletePageEditWindow, RearrangeEditWindow
-from scripts.pagehelper import merge_two_pdfs
+from scripts.pagehelper import merge_two_pdfs, compress
 
 
 class ToolBar(QToolBar):
@@ -43,10 +43,12 @@ class ToolBar(QToolBar):
         merge_action = self.addAction("&Merge pdfs")
         merge_action.triggered.connect(self.merge_triggered)
 
+        compress_action = self.addAction("&Compress")
+        compress_action.triggered.connect(self.compress_triggered)
+
         more_tools_combo_box = QComboBox()
         more_tools_combo_box.addItem("More tools")
         more_tools_combo_box.addItem("Sign forms")
-        more_tools_combo_box.addItem("Compress file")
         self.addWidget(more_tools_combo_box)
 
     def close_edit_window(self):
@@ -122,3 +124,6 @@ class ToolBar(QToolBar):
             to_open = self.file_dialog.selectedUrls()[0]
             if to_open.isValid():
                 merge_two_pdfs(self.pdf_tab.current_pdf[8:], to_open.toString()[8:])
+
+    def compress_triggered(self):
+        compress(self.pdf_tab.current_pdf[8:])
