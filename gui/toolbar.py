@@ -1,7 +1,8 @@
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QComboBox, QDialog
-from PySide6.QtCore import QSize
+from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, \
+    QVBoxLayout, QComboBox, QDialog, QFileDialog
+from PySide6.QtCore import QSize, QStandardPaths
 from edit_window import RotateEditWindow, CropEditWindow, AddPageEditWindow, DeletePageEditWindow, RearrangeEditWindow
-from scripts.pagehelper import add_page, delete_page, rotate, crop, rearrange
+from scripts.pagehelper import merge_two_pdfs
 
 
 class ToolBar(QToolBar):
@@ -10,6 +11,8 @@ class ToolBar(QToolBar):
         self.pdf_tab = pdf_tab
         self.edit_window = None
         self.active_edit = None
+        self.merge_open = False
+        self.file_dialog = None
 
         self.setIconSize(QSize(20, 20))
         self.addAction("&Print")
@@ -37,9 +40,11 @@ class ToolBar(QToolBar):
         rearrange_action = self.addAction("&Rearrange pages")
         rearrange_action.triggered.connect(self.rearrange_triggered)
 
+        merge_action = self.addAction("&Merge pdfs")
+        merge_action.triggered.connect(self.merge_triggered)
+
         more_tools_combo_box = QComboBox()
         more_tools_combo_box.addItem("More tools")
-        more_tools_combo_box.addItem("Combine pdfs")
         more_tools_combo_box.addItem("Sign forms")
         more_tools_combo_box.addItem("Compress file")
         self.addWidget(more_tools_combo_box)
@@ -106,3 +111,14 @@ class ToolBar(QToolBar):
 
     def zoom_in_triggered(self):
         self.pdf_tab.pdf_view.setZoomFactor(self.pdf_tab.pdf_view.zoomFactor() + 0.25)
+
+    def merge_triggered(self):
+        if not self.merge_open:
+            directory = QStandardPaths.writableLocation(QStandardPaths.DocumentsLocation)
+            self.file_dialog = QFileDialog(self, "Open", directory)
+            self.file_dialog.setAcceptMode(QFileDialog.AcceptOpen)
+            self.file_dialog.setMimeTypeFilters(["application/pdf"])
+        if self.file_dialog.exec() == QDialog.Accepted:
+            to_open = self.file_dialog.selectedUrls()[0]
+            if to_open.isValid():
+                merge_two_pdfs(self.pdf_tab.current_pdf[8:], to_open.toString()[8:])

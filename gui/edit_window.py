@@ -42,6 +42,7 @@ class BaseEditWindow(QWidget):
         for i in range(self.pdf_tab.pdf_document.pageCount()):
             self.page_select.addItem(str(i + 1))
 
+
 class CropEditWindow(BaseEditWindow):
     def __init__(self, pdf_tab):
         super().__init__(pdf_tab)
