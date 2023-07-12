@@ -24,6 +24,8 @@ class MenuBar(QMenuBar):
 
         edit = self.addMenu("&Edit")
         undo_action = edit.addAction("&Undo")
+        undo_action.triggered.connect(self.undo_triggered)
+
         redo_action = edit.addAction("&Redo")
         edit.addSeparator()
         cut_action = edit.addAction("&Cut")
@@ -41,3 +43,7 @@ class MenuBar(QMenuBar):
             "Chulshin's Goodey Pdf Editor is a free to use pdf editor. Check out my github: https://github.com/ckim349",
             QMessageBox.Ok | QMessageBox.Cancel
         )
+
+    def undo_triggered(self):
+        self.pdf_tab.history.undo()
+        self.pdf_tab.update_page()

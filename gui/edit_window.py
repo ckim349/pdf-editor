@@ -102,7 +102,7 @@ class RotateEditWindow(BaseEditWindow):
         rotate(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()))
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
-        self.pdf_tab.history.undo_stack.append(("rotate", 1))
+        self.pdf_tab.history.undo_stack.append(("rotate", int(self.page_select.currentText())))
 
 
 class AddPageEditWindow(BaseEditWindow):
@@ -120,7 +120,7 @@ class AddPageEditWindow(BaseEditWindow):
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
-        self.pdf_tab.history.undo_stack.append(("add", 1))
+        self.pdf_tab.history.undo_stack.append(("add_page", int(self.page_select.currentText())))
 
 
 class DeletePageEditWindow(BaseEditWindow):
@@ -138,7 +138,7 @@ class DeletePageEditWindow(BaseEditWindow):
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
-        self.pdf_tab.history.undo_stack.append(("delete", 1))
+        # self.pdf_tab.history.undo_stack.append(("delete_page", int(self.page_select.currentText())))
 
 
 class RearrangeEditWindow(BaseEditWindow):
@@ -164,7 +164,7 @@ class RearrangeEditWindow(BaseEditWindow):
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
         self.update_new_page_select()
-        self.pdf_tab.history.undo_stack.append(("rearrange", 1, 2))
+        self.pdf_tab.history.undo_stack.append(("rearrange", int(self.page_select.currentText()), int(self.new_page_select.currentText())))
 
     def update_new_page_select(self):
         self.new_page_select.clear()

@@ -21,7 +21,7 @@ class PdfTab(QMainWindow):
         self.current_pdf = None
         self.reload_reference = None
 
-        self.history = History()
+        self.history = History(self)
 
         toolbar = ToolBar(self)
         self.addToolBar(toolbar)
@@ -75,3 +75,6 @@ class PdfTab(QMainWindow):
             message = "You can't save a file that's not open!"
             print(message)
             QMessageBox.critical(self, "Failed to open", message)
+
+    def update_page(self):
+        self.open(self.reload_reference)
