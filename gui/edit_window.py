@@ -1,3 +1,4 @@
+from PySide6.QtCore import QRectF
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QGridLayout, QComboBox, QLineEdit
 from PySide6.QtPdf import QPdfPageNavigator
 from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange, get_size
@@ -13,10 +14,10 @@ class BaseEditWindow(QWidget):
         page_number = QLabel("1/2")
         next_page_button = QPushButton(">")
 
-        pdf_view_layout = QVBoxLayout()
+        self.pdf_view_layout = QVBoxLayout()
         pdf_buttons_layout = QHBoxLayout()
-        pdf_view_layout.addLayout(pdf_buttons_layout)
-        pdf_view_layout.addWidget(self.edit_window_pdf)
+        self.pdf_view_layout.addLayout(pdf_buttons_layout)
+        self.pdf_view_layout.addWidget(self.edit_window_pdf)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
 
         self.editing_layout = QVBoxLayout()
@@ -29,7 +30,7 @@ class BaseEditWindow(QWidget):
 
         main_layout = QHBoxLayout()
         main_layout.addLayout(self.editing_layout)
-        main_layout.addLayout(pdf_view_layout)
+        main_layout.addLayout(self.pdf_view_layout)
 
         pdf_buttons_layout.addWidget(back_page_button)
         pdf_buttons_layout.addWidget(page_number)
@@ -51,21 +52,22 @@ class CropEditWindow(BaseEditWindow):
 
         self.page_bounds = QLabel()
         self.page_select.currentIndexChanged.connect(self.update_page_bounds)
-        self.update_page_bounds()
         self.editing_layout.addWidget(self.page_bounds)
 
         self.editing_layout.addWidget(QLabel("Lower left x: "))
-        self.lower_left_x = QLineEdit()
+        self.lower_left_x = QLineEdit("0")
         self.editing_layout.addWidget(self.lower_left_x)
         self.editing_layout.addWidget(QLabel("Lower left y: "))
-        self.lower_left_y = QLineEdit()
+        self.lower_left_y = QLineEdit("0")
         self.editing_layout.addWidget(self.lower_left_y)
         self.editing_layout.addWidget(QLabel("Upper right x: "))
-        self.upper_right_x = QLineEdit()
+        self.upper_right_x = QLineEdit(str(self.x))
         self.editing_layout.addWidget(self.upper_right_x)
         self.editing_layout.addWidget(QLabel("Upper right y: "))
-        self.upper_right_y = QLineEdit()
+        self.upper_right_y = QLineEdit(str(self.y))
         self.editing_layout.addWidget(self.upper_right_y)
+
+        self.update_page_bounds()
 
         crop_button = QPushButton("Crop dat")
         self.editing_layout.addWidget(crop_button)
@@ -79,8 +81,10 @@ class CropEditWindow(BaseEditWindow):
 
     def update_page_bounds(self):
         current_page = int(self.page_select.currentText())
-        (x,y) = get_size(self.pdf_tab.current_pdf[8:], current_page)
-        self.page_bounds.setText(f"Page {current_page} bounds: {'{:.2f}'.format(x), '{:.2f}'.format(y)}")
+        self.x, self.y = get_size(self.pdf_tab.current_pdf[8:], current_page)
+        self.page_bounds.setText(f"Page {current_page} bounds: {'{:.2f}'.format(self.x), '{:.2f}'.format(self.y)}")
+        self.upper_right_x.setText(str('{:.2f}'.format(self.x)))
+        self.upper_right_y.setText(str('{:.2f}'.format(self.y)))
 
 
 class RotateEditWindow(BaseEditWindow):
