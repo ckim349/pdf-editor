@@ -1,5 +1,6 @@
+import os
 from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, \
-    QVBoxLayout, QComboBox, QDialog, QFileDialog
+    QMessageBox,QVBoxLayout, QComboBox, QDialog, QFileDialog
 from PySide6.QtCore import QSize, QStandardPaths
 from edit_window import RotateEditWindow, CropEditWindow, AddPageEditWindow, DeletePageEditWindow, RearrangeEditWindow
 from scripts.pagehelper import merge_two_pdfs, compress
@@ -124,6 +125,39 @@ class ToolBar(QToolBar):
             to_open = self.file_dialog.selectedUrls()[0]
             if to_open.isValid():
                 merge_two_pdfs(self.pdf_tab.current_pdf[8:], to_open.toString()[8:])
+        ret = QMessageBox.information(
+            self.pdf_tab,
+            "Merge information",
+            "Merge was successful!",
+            QMessageBox.Ok | QMessageBox.Cancel
+        )
 
     def compress_triggered(self):
-        compress(self.pdf_tab.current_pdf[8:])
+        path = self.pdf_tab.current_pdf[8:]
+        file_size = os.path.getsize(path) / (1024 * 1024)
+        compress(path)
+        new_size = os.path.getsize(f"{os.path.split(path)[0]}/compressed-{path.split('/')[-1][:-4]}.pdf") / (1024 * 1024)
+        if new_size < file_size:
+            ret = QMessageBox.information(
+                self.pdf_tab,
+                "Compress information",
+                f"Compress was successful! You have compressed {path.split('/')[-1][:-4]}.pdf by {file_size - new_size:.4f}mb!"
+                f" Check out your new file compressed-{path.split('/')[-1][:-4]}.pdf.",
+                QMessageBox.Ok | QMessageBox.Cancel
+            )
+        elif new_size > file_size:
+            ret = QMessageBox.information(
+                self.pdf_tab,
+                "Compress information",
+                f"Uh oh. Compress was not successful... {path.split('/')[-1][:-4]}.pdf has increased in size by {new_size - file_size:.4f}mb!"
+                f" Check out your new file compressed-{path.split('/')[-1][:-4]}.pdf.",
+                QMessageBox.Ok | QMessageBox.Cancel
+            )
+        else:
+            ret = QMessageBox.information(
+                self.pdf_tab,
+                "Compress information",
+                f"Eyy, sometimes things just have to stay the same. Compression unsuccessful"
+                f" Check out your new file compressed-{path.split('/')[-1][:-4]}.pdf.",
+                QMessageBox.Ok | QMessageBox.Cancel
+            )

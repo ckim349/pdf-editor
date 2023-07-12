@@ -73,10 +73,13 @@ def delete_page(path, page_number):
 
 def merge_two_pdfs(pdf_1_path, pdf_2_path):
     merger = PdfMerger()
-    with open(f"{os.path.split(pdf_1_path)[0]}-merged.pdf", "wb") as pdf:
+    filename = f"{os.path.split(pdf_1_path)[0]}/merged-{pdf_1_path.split('/')[-1][:-4]}-{pdf_2_path.split('/')[-1][:-4]}.pdf"
+    with open(filename, "wb"):
         merger.append(pdf_1_path)
         merger.append(pdf_2_path)
-        merger.write(pdf)
+        print(filename)
+        with open(filename, "wb") as output:
+            merger.write(output)
 
 
 # Need to display width and height of page so user can then determine where to crop
@@ -115,6 +118,4 @@ def compress(path):
         for page in reader.pages:
             page.compress_content_streams()
             writer.add_page(page)
-
-        with open(f"{os.path.split(path)[0]}-compressed.pdf", "wb") as fp:
-            writer.write(fp)
+        output(f"{os.path.split(path)[0]}/compressed-{path.split('/')[-1][:-4]}.pdf", writer)
