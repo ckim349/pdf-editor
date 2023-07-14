@@ -168,6 +168,9 @@ class RearrangeEditWindow(BaseEditWindow):
         rearrange_button.clicked.connect(self.rearrange_button_clicked)
 
     def rearrange_button_clicked(self):
+        self.pdf_tab.history.undo_stack.append(
+            ("rearrange", int(self.page_select.currentText()), int(self.new_page_select.currentText()))
+        )
         rearrange(
             self.pdf_tab.current_pdf[8:],
             int(self.page_select.currentText()),
@@ -176,10 +179,7 @@ class RearrangeEditWindow(BaseEditWindow):
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
-        self.update_new_page_select()
-        self.pdf_tab.history.undo_stack.append(
-            ("rearrange", int(self.page_select.currentText()), int(self.new_page_select.currentText()))
-        )
+        self.update_new_page_select()\
 
     def update_new_page_select(self):
         self.new_page_select.clear()

@@ -25,6 +25,8 @@ class MenuBar(QMenuBar):
         undo_action.triggered.connect(self.undo_triggered)
 
         redo_action = edit.addAction("&Redo")
+        redo_action.triggered.connect(self.redo_triggered)
+
         edit.addSeparator()
         cut_action = edit.addAction("&Cut")
         copy_action = edit.addAction("&Copy")
@@ -44,4 +46,8 @@ class MenuBar(QMenuBar):
 
     def undo_triggered(self):
         self.pdf_tab.history.undo()
+        self.pdf_tab.update_page()
+
+    def redo_triggered(self):
+        self.pdf_tab.history.redo()
         self.pdf_tab.update_page()

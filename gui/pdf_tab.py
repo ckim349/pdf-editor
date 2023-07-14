@@ -21,8 +21,8 @@ class PdfTab(QMainWindow):
 
         self.history = History(self)
 
-        toolbar = ToolBar(self)
-        self.addToolBar(toolbar)
+        self.toolbar = ToolBar(self)
+        self.addToolBar(self.toolbar)
 
         self.pdf_view = QPdfView(self)
         self.pdf_view.setDocument(self.pdf_document)
