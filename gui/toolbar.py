@@ -15,9 +15,6 @@ class ToolBar(QToolBar):
         self.file_dialog = None
 
         self.setIconSize(QSize(20, 20))
-        self.addAction("&Print")
-        self.addAction("&Find")
-        self.addSeparator()
 
         zoom_out_action = self.addAction("&Zoom out")
         zoom_out_action.triggered.connect(self.zoom_out_triggered)
@@ -39,17 +36,19 @@ class ToolBar(QToolBar):
 
         rearrange_action = self.addAction("&Rearrange pages")
         rearrange_action.triggered.connect(self.rearrange_triggered)
+        self.addSeparator()
 
         merge_action = self.addAction("&Merge pdfs")
         merge_action.triggered.connect(self.merge_triggered)
 
         compress_action = self.addAction("&Compress")
         compress_action.triggered.connect(self.compress_triggered)
+        #
+        # sign_action = self.addAction("&Sign")
+        # sign_action.triggered.connect(self.sign_triggered)
 
-        more_tools_combo_box = QComboBox()
-        more_tools_combo_box.addItem("More tools")
-        more_tools_combo_box.addItem("Sign forms")
-        self.addWidget(more_tools_combo_box)
+        # add_text_action = self.addAction("&Add text")
+        # add_text_action.triggered.connect(self.add_text_triggered)
 
     def close_edit_window(self):
         if self.edit_window:
@@ -160,3 +159,11 @@ class ToolBar(QToolBar):
                 f" Check out your new file compressed-{path.split('/')[-1][:-4]}.pdf.",
                 QMessageBox.Ok | QMessageBox.Cancel
             )
+
+    # def add_text_triggered(self):
+    #     add_text(self.pdf_tab.current_pdf[8:], 1)
+    #     self.pdf_tab.open(self.pdf_tab.reload_reference)
+
+    #
+    # def sign_triggered(self):
+    #     fill_form(self.pdf_tab.current_pdf[8:], 1, {"ting": "ting"})

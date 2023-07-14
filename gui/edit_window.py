@@ -8,10 +8,6 @@ class BaseEditWindow(QWidget):
         self.pdf_tab = pdf_tab
         self.edit_window_pdf = EditWindowPdf()
 
-        back_page_button = QPushButton("<")
-        page_number = QLabel("1/2")
-        next_page_button = QPushButton(">")
-
         self.pdf_view_layout = QVBoxLayout()
         pdf_buttons_layout = QHBoxLayout()
         self.pdf_view_layout.addLayout(pdf_buttons_layout)
@@ -28,11 +24,7 @@ class BaseEditWindow(QWidget):
 
         main_layout = QHBoxLayout()
         main_layout.addLayout(self.editing_layout)
-        main_layout.addLayout(self.pdf_view_layout)
-
-        pdf_buttons_layout.addWidget(back_page_button)
-        pdf_buttons_layout.addWidget(page_number)
-        pdf_buttons_layout.addWidget(next_page_button)
+        main_layout.addLayout(self.pdf_view_layout, 3)
 
         self.setLayout(main_layout)
 
