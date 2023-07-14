@@ -1,6 +1,4 @@
-from PySide6.QtCore import QRectF
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QGridLayout, QComboBox, QLineEdit
-from PySide6.QtPdf import QPdfPageNavigator
+from PySide6.QtWidgets import QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QComboBox, QLineEdit
 from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange, get_size
 from edit_window_pdf import EditWindowPdf
 

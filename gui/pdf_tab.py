@@ -1,14 +1,11 @@
 import sys
-from PySide6.QtPrintSupport import QPrinter
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QDialog, QFileDialog
-from PySide6.QtPdf import QPdfDocument, QPdfPageNavigator
+from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QMessageBox, QDialog, QFileDialog
+from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 from PySide6.QtCore import QUrl, Slot, QStandardPaths
-from PySide6.QtGui import QPdfWriter, QPainter, QPageSize
-from PySide6 import QtCore
 from toolbar import ToolBar
 from history import History
-from scripts.pagehelper import save_as, output
+from scripts.pagehelper import save_as
 
 class PdfTab(QMainWindow):
     def __init__(self, main_window):

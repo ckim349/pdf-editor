@@ -1,10 +1,8 @@
-import sys
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QDialog, QFileDialog
-from PySide6.QtPdf import QPdfDocument, QPdfPageNavigator
+from PySide6.QtWidgets import QMainWindow, QVBoxLayout
+from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 from PySide6.QtPdf import QPdfPageNavigator
-from PySide6.QtCore import QUrl, Slot, QStandardPaths
-from scripts.pagehelper import save_as, output
+from PySide6.QtCore import QUrl, Slot
 
 
 class EditWindowPdf(QMainWindow):

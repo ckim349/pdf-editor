@@ -10,11 +10,9 @@ class History():
     def undo(self):
         if self.undo_stack:
             current = self.undo_stack.pop()
-            print(current)
             path = self.pdf_tab.current_pdf[8:]
 
             if current[0] == "rotate":
-                print("we in")
                 rotate(path, current[1])
                 rotate(path, current[1])
                 rotate(path, current[1])

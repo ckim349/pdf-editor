@@ -55,9 +55,15 @@ def rotate(path, page_number):
         reader = PdfReader(pdf)
         writer = PdfWriter()
         for i in range(len(reader.pages)):
-            writer.add_page(reader.pages[i])
             if i + 1 == page_number:
-                writer.pages[i].rotate(90)
+                # print(reader.pages[i].cropbox)
+                reader.pages[i].rotate(90)
+                reader.pages[i].transfer_rotation_to_content()
+                # reader.pages[i].cropbox.lower_left = (reader.pages[i].cropbox[0], reader.pages[i].cropbox[1])
+                # reader.pages[i].cropbox.upper_right = (reader.pages[i].cropbox[2], reader.pages[i].cropbox[3])
+                # print(reader.pages[i].cropbox)
+
+            writer.add_page(reader.pages[i])
         output(f"{os.path.splitext(path)[0]}.pdf", writer)
 
 def delete_page(path, page_number):

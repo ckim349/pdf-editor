@@ -1,7 +1,5 @@
-import sys
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QTextEdit, QMenuBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog, QMessageBox, QDialog
-from PySide6.QtCore import QUrl, Slot, QStandardPaths
-from PySide6.QtPdf import QPdfDocument
+from PySide6.QtWidgets import QMenuBar, QMessageBox
+
 
 class MenuBar(QMenuBar):
     def __init__(self, main_window, pdf_tab):
