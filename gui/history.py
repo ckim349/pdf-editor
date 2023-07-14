@@ -19,12 +19,11 @@ class History():
             elif current[0] == "add_page":
                 delete_page(path, current[1])
             elif current[0] == "delete_page":
-                pass
+                add_page(path, current[1], current[2])
             elif current[0] == "crop":
-                pass
+                crop(path, current[1], current[2], current[3], current[4], current[5])
             elif current[0] == "rearrange":
                 rearrange(path, current[2], current[1])
-
 
     def redo(self):
         pass

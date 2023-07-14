@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QComboBox, QLineEdit
-from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange, get_size
+from scripts.pagehelper import add_blank_page, rotate, delete_page, crop, rearrange, get_size, get_coords, save_page
 from edit_window_pdf import EditWindowPdf
 
 class BaseEditWindow(QWidget):
@@ -72,10 +72,20 @@ class CropEditWindow(BaseEditWindow):
         crop_button.clicked.connect(self.crop_button_clicked)
 
     def crop_button_clicked(self):
-        crop(self.pdf_tab.current_pdf[8:], float(self.page_select.currentText()), float(self.lower_left_x.text()), float(self.lower_left_y.text()), float(self.upper_right_x.text()), float(self.upper_right_y.text()))
+        (l_l_x, l_l_y, u_r_x, u_r_y) = get_coords(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()))
+        self.pdf_tab.history.undo_stack.append(
+            ("crop", int(self.page_select.currentText()), l_l_x, l_l_y, u_r_x, u_r_y)
+        )
+        crop(
+            self.pdf_tab.current_pdf[8:],
+            int(self.page_select.currentText()),
+            float(self.lower_left_x.text()),
+            float(self.lower_left_y.text()),
+            float(self.upper_right_x.text()),
+            float(self.upper_right_y.text())
+        )
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
-        # self.pdf_tab.history.undo_stack.append()
 
     def update_page_bounds(self):
         current_page = int(self.page_select.currentText())
@@ -114,7 +124,7 @@ class AddPageEditWindow(BaseEditWindow):
         add_page_button.clicked.connect(self.add_page_button_clicked)
 
     def add_page_button_clicked(self):
-        add_page(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()))
+        add_blank_page(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()))
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
@@ -132,11 +142,12 @@ class DeletePageEditWindow(BaseEditWindow):
         delete_page_button.clicked.connect(self.delete_page_button_clicked)
 
     def delete_page_button_clicked(self):
+        page = save_page(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()))
+        self.pdf_tab.history.undo_stack.append(("delete_page", int(self.page_select.currentText()), page))
         delete_page(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()))
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
-        # self.pdf_tab.history.undo_stack.append(("delete_page", int(self.page_select.currentText())))
 
 
 class RearrangeEditWindow(BaseEditWindow):
@@ -157,12 +168,18 @@ class RearrangeEditWindow(BaseEditWindow):
         rearrange_button.clicked.connect(self.rearrange_button_clicked)
 
     def rearrange_button_clicked(self):
-        rearrange(self.pdf_tab.current_pdf[8:], int(self.page_select.currentText()), int(self.new_page_select.currentText()))
+        rearrange(
+            self.pdf_tab.current_pdf[8:],
+            int(self.page_select.currentText()),
+            int(self.new_page_select.currentText())
+        )
         self.pdf_tab.open(self.pdf_tab.reload_reference)
         self.edit_window_pdf.open(self.pdf_tab.reload_reference)
         self.update_page_select()
         self.update_new_page_select()
-        self.pdf_tab.history.undo_stack.append(("rearrange", int(self.page_select.currentText()), int(self.new_page_select.currentText())))
+        self.pdf_tab.history.undo_stack.append(
+            ("rearrange", int(self.page_select.currentText()), int(self.new_page_select.currentText()))
+        )
 
     def update_new_page_select(self):
         self.new_page_select.clear()

@@ -7,6 +7,7 @@ from toolbar import ToolBar
 from history import History
 from scripts.pagehelper import save_as
 
+
 class PdfTab(QMainWindow):
     def __init__(self, main_window):
         super().__init__()
