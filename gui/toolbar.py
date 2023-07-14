@@ -43,12 +43,6 @@ class ToolBar(QToolBar):
 
         compress_action = self.addAction("&Compress")
         compress_action.triggered.connect(self.compress_triggered)
-        #
-        # sign_action = self.addAction("&Sign")
-        # sign_action.triggered.connect(self.sign_triggered)
-
-        # add_text_action = self.addAction("&Add text")
-        # add_text_action.triggered.connect(self.add_text_triggered)
 
     def close_edit_window(self):
         if self.edit_window:
@@ -159,11 +153,3 @@ class ToolBar(QToolBar):
                 f" Check out your new file compressed-{path.split('/')[-1][:-4]}.pdf.",
                 QMessageBox.Ok | QMessageBox.Cancel
             )
-
-    # def add_text_triggered(self):
-    #     add_text(self.pdf_tab.current_pdf[8:], 1)
-    #     self.pdf_tab.open(self.pdf_tab.reload_reference)
-
-    #
-    # def sign_triggered(self):
-    #     fill_form(self.pdf_tab.current_pdf[8:], 1, {"ting": "ting"})

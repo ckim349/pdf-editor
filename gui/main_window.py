@@ -1,13 +1,6 @@
-import sys
-from PySide6.QtWidgets import QApplication, QTabWidget, QMainWindow, QToolBar, QWidget, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QPushButton, QMessageBox, QDialog, QFileDialog, QTabBar
-from PySide6.QtPdf import QPdfDocument
-from PySide6.QtPdfWidgets import QPdfView
-from PySide6.QtCore import QUrl, Slot, QStandardPaths
-from PySide6 import QtCore
-from PySide6.QtGui import QAction, QIcon
-from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEngineSettings
-from toolbar import ToolBar
+from PySide6.QtWidgets import QTabWidget, QMainWindow, QWidget, QVBoxLayout, QPushButton, QToolButton, QSizePolicy
+from PySide6.QtGui import QIcon
+from PySide6.QtCore import QSize, Qt
 from menubar import MenuBar
 from pdf_tab import PdfTab
 
@@ -27,6 +20,20 @@ class MainWindow(QMainWindow):
         self.tab_widget = QTabWidget(central_widget)
         self.tab_widget.tabBar().setExpanding(True)
         home_tab = QWidget()
+        home_layout = QVBoxLayout()
+
+        open_button = QToolButton()
+        open_button.setIcon(QIcon("../icon/folder_open.png"))
+        open_button.setIconSize(QSize(100, 100))
+        open_button.clicked.connect(pdf_tab.open_triggered)
+
+        open_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        open_button.setStyleSheet("QPushButton { text-align: center; }")
+        home_layout.addStretch(1)
+        home_layout.addWidget(open_button, alignment=Qt.AlignCenter)
+        home_layout.addStretch(1)
+        home_tab.setLayout(home_layout)
+
 
         self.tab_widget.addTab(home_tab, "Home")
 
@@ -38,5 +45,5 @@ class MainWindow(QMainWindow):
     def quit(self):
         self.app.quit()
 
-    def setTab(self, index):
+    def set_tab(self, index):
         self.tab_widget.setCurrentIndex(index)

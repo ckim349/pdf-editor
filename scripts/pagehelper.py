@@ -1,12 +1,5 @@
 import os
 from PyPDF2 import PdfReader, PdfWriter, PdfMerger
-from PyPDF2.generic import BooleanObject, NameObject, IndirectObject, DictionaryObject, AnnotationBuilder
-from PyPDF2.constants import CatalogDictionary, TrailerKeys, InteractiveFormDictEntries
-from typing import cast
-
-
-path1 = "../samplepdfs/1.pdf"
-path2 = "../samplepdfs/2.pdf"
 
 
 def output(filename, writer):

@@ -37,7 +37,7 @@ class PdfTab(QMainWindow):
             self.reload_reference = doc_location
             self.pdf_document.load(doc_location.toLocalFile())
             self.main_window.tab_widget.insertTab(-1, self, doc_location.toString().split('/')[-1])
-            self.main_window.setTab(1)
+            self.main_window.set_tab(1)
             self.file_opened = True
             self.current_pdf = doc_location.toString()
         else:
