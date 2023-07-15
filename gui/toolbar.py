@@ -51,54 +51,39 @@ class ToolBar(QToolBar):
             self.active_edit = None
 
     def crop_triggered(self):
-        if self.active_edit != "crop":
-            self.close_edit_window()
-            self.edit_window = CropEditWindow(self.pdf_tab)
-            self.edit_window.resize(800, 550)
-            self.edit_window.show()
-            self.active_edit = "crop"
-        else:
-            self.close_edit_window()
+        self.close_edit_window()
+        self.edit_window = CropEditWindow(self.pdf_tab)
+        self.edit_window.resize(800, 550)
+        self.edit_window.show()
+        self.active_edit = "crop"
 
     def rotate_triggered(self):
-        if self.active_edit != "rotate":
-            self.close_edit_window()
-            self.edit_window = RotateEditWindow(self.pdf_tab)
-            self.edit_window.resize(800, 550)
-            self.edit_window.show()
-            self.active_edit = "rotate"
-        else:
-            self.close_edit_window()
+        self.close_edit_window()
+        self.edit_window = RotateEditWindow(self.pdf_tab)
+        self.edit_window.resize(800, 550)
+        self.edit_window.show()
+        self.active_edit = "rotate"
 
     def add_page_triggered(self):
-        if self.active_edit != "add_page":
-            self.close_edit_window()
-            self.edit_window = AddPageEditWindow(self.pdf_tab)
-            self.edit_window.resize(800, 550)
-            self.edit_window.show()
-            self.active_edit = "add_page"
-        else:
-            self.close_edit_window()
+        self.close_edit_window()
+        self.edit_window = AddPageEditWindow(self.pdf_tab)
+        self.edit_window.resize(800, 550)
+        self.edit_window.show()
+        self.active_edit = "add_page"
 
     def delete_page_triggered(self):
-        if self.active_edit != "delete_page":
-            self.close_edit_window()
-            self.edit_window = DeletePageEditWindow(self.pdf_tab)
-            self.edit_window.resize(800, 550)
-            self.edit_window.show()
-            self.active_edit = "delete_page"
-        else:
-            self.close_edit_window()
+        self.close_edit_window()
+        self.edit_window = DeletePageEditWindow(self.pdf_tab)
+        self.edit_window.resize(800, 550)
+        self.edit_window.show()
+        self.active_edit = "delete_page"
 
     def rearrange_triggered(self):
-        if self.active_edit != "rearrange":
-            self.close_edit_window()
-            self.edit_window = RearrangeEditWindow(self.pdf_tab)
-            self.edit_window.resize(800, 550)
-            self.edit_window.show()
-            self.active_edit = "rearrange"
-        else:
-            self.close_edit_window()
+        self.close_edit_window()
+        self.edit_window = RearrangeEditWindow(self.pdf_tab)
+        self.edit_window.resize(800, 550)
+        self.edit_window.show()
+        self.active_edit = "rearrange"
 
     def zoom_out_triggered(self):
         if self.pdf_tab.pdf_view.zoomFactor() > 0.25:
@@ -117,12 +102,12 @@ class ToolBar(QToolBar):
             to_open = self.file_dialog.selectedUrls()[0]
             if to_open.isValid():
                 merge_two_pdfs(self.pdf_tab.current_pdf[8:], to_open.toString()[8:])
-        ret = QMessageBox.information(
-            self.pdf_tab,
-            "Merge information",
-            "Merge was successful!",
-            QMessageBox.Ok | QMessageBox.Cancel
-        )
+                ret = QMessageBox.information(
+                    self.pdf_tab,
+                    "Merge information",
+                    "Merge was successful!",
+                    QMessageBox.Ok | QMessageBox.Cancel
+                )
 
     def compress_triggered(self):
         path = self.pdf_tab.current_pdf[8:]
