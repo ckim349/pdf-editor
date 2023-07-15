@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QTabWidget, QMainWindow, QWidget, QVBoxLayout, QPushButton, QToolButton, QSizePolicy
+from PySide6.QtWidgets import QTabWidget, QMainWindow, QWidget, QVBoxLayout, QToolButton, QSizePolicy
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QSize, Qt
 from menubar import MenuBar

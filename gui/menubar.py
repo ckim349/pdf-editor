@@ -28,9 +28,6 @@ class MenuBar(QMenuBar):
         redo_action.triggered.connect(self.redo_triggered)
 
         edit.addSeparator()
-        cut_action = edit.addAction("&Cut")
-        copy_action = edit.addAction("&Copy")
-        paste_action = edit.addAction("&Paste")
 
         help = self.addMenu("&Help")
         about_action = help.addAction("&About")

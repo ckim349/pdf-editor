@@ -1,5 +1,5 @@
 import os
-from PySide6.QtWidgets import QToolBar, QMessageBox, QComboBox, QDialog, QFileDialog
+from PySide6.QtWidgets import QToolBar, QMessageBox, QDialog, QFileDialog
 from PySide6.QtCore import QSize, QStandardPaths
 from edit_window import RotateEditWindow, CropEditWindow, AddPageEditWindow, DeletePageEditWindow, RearrangeEditWindow
 from pagehelper import merge_two_pdfs, compress
