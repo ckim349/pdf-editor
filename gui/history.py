@@ -1,4 +1,4 @@
-from scripts.pagehelper import add_page, rotate, delete_page, crop, rearrange, get_coords, save_page
+from pagehelper import add_page, rotate, delete_page, crop, rearrange, get_coords, save_page
 
 
 class History():

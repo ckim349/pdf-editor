@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QComboBox, QLineEdit
-from scripts.pagehelper import add_blank_page, rotate, delete_page, crop, rearrange, get_size, get_coords, save_page
+from pagehelper import add_blank_page, rotate, delete_page, crop, rearrange, get_size, get_coords, save_page
 from edit_window_pdf import EditWindowPdf
 
 class BaseEditWindow(QWidget):

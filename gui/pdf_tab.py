@@ -5,7 +5,7 @@ from PySide6.QtPdfWidgets import QPdfView
 from PySide6.QtCore import QUrl, Slot, QStandardPaths
 from toolbar import ToolBar
 from history import History
-from scripts.pagehelper import save_as
+from pagehelper import save_as
 
 
 class PdfTab(QMainWindow):

@@ -2,7 +2,7 @@ import os
 from PySide6.QtWidgets import QToolBar, QMessageBox, QComboBox, QDialog, QFileDialog
 from PySide6.QtCore import QSize, QStandardPaths
 from edit_window import RotateEditWindow, CropEditWindow, AddPageEditWindow, DeletePageEditWindow, RearrangeEditWindow
-from scripts.pagehelper import merge_two_pdfs, compress
+from pagehelper import merge_two_pdfs, compress
 
 
 class ToolBar(QToolBar):
